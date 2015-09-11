@@ -10,23 +10,22 @@ if(!grepl("/ExploratoryAnalysis",wd))
     setwd("./ExploratoryAnalysis/")
 }
 
-if(!file.exists(file.path("./exdata_data_household_power_consumption.zip")))
-{
-    download.file("https://d396qusza40orc.cloudfront.net/exdata%2Fdata%2Fhousehold_power_consumption.zip",
-                  destfile = "./exdata_data_household_power_consumption.zip")
-}
-    
-if(!file.exists(file.path("./household_power_consumption.txt")))
-{
-    unzip("./exdata_data_household_power_consumption.zip")        
-}
-
 if(!file.exists(file.path("./powerConsumption.rda")))
 {
+    if(!file.exists(file.path("./exdata_data_household_power_consumption.zip")))
+    {
+        download.file("https://d396qusza40orc.cloudfront.net/exdata%2Fdata%2Fhousehold_power_consumption.zip",
+                      destfile = "./exdata_data_household_power_consumption.zip")
+    }
+    
+    if(!file.exists(file.path("./household_power_consumption.txt")))
+    {
+        unzip("./exdata_data_household_power_consumption.zip")        
+    }
+    
     household_power_consumption <- read.csv("./household_power_consumption.txt", sep=";", na.strings="?")
-    save(household_power_consumption,file="./powerConsumption.rda")    
-} else
-{
+    save(household_power_consumption,file="./powerConsumption.rda") 
+} else {
     load(file="./powerConsumption.rda")
 }
 
